@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 [CardProperty(1, "弹绳","2D/Item_Other_TanSheng_IMG/Item_Other_TanSheng_IMG", "碰撞—每次碰撞轻微把球向上弹起")]
 public class SkipRopeCardData : CardData
@@ -7,7 +7,7 @@ public class SkipRopeCardData : CardData
 
     public override void OnChosen()
     {
-        GameState.Um.StartChosenArea(area =>
+        GameState.Um.StartChosenColliderArea(area =>
         {
             // 创建 prefab
             var pos = area.transform.position;

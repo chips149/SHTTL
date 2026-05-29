@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 [CardProperty(0, "砰砰器", "2D/Item_Other_PengPengQi_IMG/Item_Other_PengPengQi1_IMG_DaiJi", "碰撞—将该球弹开")]
 public class FuckMachineCardData : CardData
@@ -8,7 +8,7 @@ public class FuckMachineCardData : CardData
     public override void OnChosen()
     {
         
-        GameState.Um.StartChosenArea(area =>
+        GameState.Um.StartChosenColliderArea(area =>
         {
             // 创建 prefab
             var pos = area.transform.position;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -102,4 +102,9 @@ public static class GameState
     public static UserAreaManager Um;
     public static Player Player;
     public static MonsterUI MonsterUI;
+
+    // ★ 关卡/波次相关
+    public static int currentLevel;
+    public static bool spawnOver;
+    public static bool isGameOver;
 }

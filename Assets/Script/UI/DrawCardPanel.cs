@@ -6,15 +6,6 @@ public class DrawCardPanel : MonoBehaviour
 {
     private CardViewer[] _viewers;
 
-    private void Awake()
-    {
-    }
-
-    void Start()
-    {
-    }
-
-
     void RandomCard()
     {
         _viewers ??= transform.GetComponentsInChildren<CardViewer>();

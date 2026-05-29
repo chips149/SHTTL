@@ -21,10 +21,7 @@ public class Cake : MonoBehaviour
         _canShoot = false;
 
         MarbleBehavior marble = collision.GetComponent<MarbleBehavior>();
-        if (marble != null)
-        {
-            marble.hasCake = true;
-        }
+        marble.AttachCake();
 
         Invoke(nameof(Reset), coolTime);
     }

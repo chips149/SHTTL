@@ -1,4 +1,3 @@
-using UnityEditorInternal;
 using UnityEngine;
 
 public class ArrowFly : MonoBehaviour
@@ -9,15 +8,26 @@ public class ArrowFly : MonoBehaviour
 
     private Transform target;
 
-    void Start()
+    private void Start()
     {
         GameObject monster = GameObject.FindWithTag("Monster");
-        target = monster.transform;
+        if (monster == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
+        target = monster.transform;
     }
 
-    void Update()
-    { 
+    private void Update()
+    {
+        if (target == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
 
         if (Vector2.Distance(transform.position, target.position) < 0.3f)
@@ -26,13 +36,17 @@ public class ArrowFly : MonoBehaviour
         }
     }
 
-    void Hit()
+    private void Hit()
     {
-        MonsterHealth health = target.GetComponent<MonsterHealth>();
-        if (health != null)
+        IBeHit beHit = target.GetComponent<IBeHit>();
+        if (beHit != null)
         {
-            var finishDamage=isEggBoosted?damage*2:damage;
-            health.TakeDamage(finishDamage);
+            int finishDamage = isEggBoosted ? damage * 2 : damage;
+            beHit.BeHit(new BeHitData
+            {
+                damage = finishDamage,
+                from = "Arrow"
+            });
         }
 
         Destroy(gameObject);

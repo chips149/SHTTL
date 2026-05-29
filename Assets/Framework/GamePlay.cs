@@ -39,12 +39,30 @@ namespace Framework.Gameplay
                 if (ctx.isInterrupt)
                     return;
             }
+
+            foreach (var effect in  temp)
+            {
+                if(effect is not GameplayEffect{finish:true}e)continue;
+                e.OnRemove();
+                effects.Remove(e);
+            }
         }
     }
 
     public abstract class GameplayEffect
     {
         public int Priority;
+        public bool finish = false;
+
+        public virtual void OnRefresh()
+        {
+            
+        }
+
+        public virtual void OnRemove()
+        {
+            
+        }
     }
 
     public interface IGameplayEvent<in T> where T : GameplayEventData

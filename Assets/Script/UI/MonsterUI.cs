@@ -65,7 +65,12 @@ public class MonsterUI : MonoBehaviour
     private void Attack()
     {
         Debug.Log("怪物攻击！");
-        GameState.Player.TakeDamage(attackDamage);
+        IBeHit beHit = GameState.Player.GetComponent<IBeHit>();
+        beHit?.BeHit(new BeHitData
+        {
+            damage = attackDamage,
+            from = "Monster"
+        });
     }
 
     public void Knockback()

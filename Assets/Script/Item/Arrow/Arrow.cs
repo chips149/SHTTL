@@ -1,36 +1,42 @@
-using System;
 using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
+    private const string ArrowBulletPath = "Prefab/Bullet/ArrowBullet";
+
     public float coolTime = 2f;
     private bool _canShoot = true;
 
-    void OnEnable()
+    private void OnEnable()
     {
-       _canShoot = true;
+        _canShoot = true;
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Marble") || !_canShoot) return;
 
-        var isEgg = other.GetComponent<MarbleBehavior>().isClone;
-        ShootArrow(isEgg);
+        MarbleBehavior marble = other.GetComponent<MarbleBehavior>();
+        ShootArrow(marble.isClone);
 
         _canShoot = false;
-        Invoke("Reset", coolTime);
-        
-        MarbleBehavior marble = other.GetComponent<MarbleBehavior>();
-        if (marble != null && marble.hasCake)
+        Invoke(nameof(Reset), coolTime);
+
+        if (marble.hasCake)
         {
-            ShootCake();
-            marble.hasCake = false;
+            marble.DetachCake();
         }
     }
 
-    void ShootArrow(bool isEgg)
+    private void ShootArrow(bool isEgg)
     {
-        GameObject arrow = Resources.Load<GameObject>("Prefab/ArrowBullet");
+        GameObject arrow = Resources.Load<GameObject>(ArrowBulletPath);
+        if (arrow == null)
+        {
+            Debug.LogError($"弓箭预制体加载失败，请确认路径存在：Resources/{ArrowBulletPath}.prefab");
+            return;
+        }
+
         GameObject go = Instantiate(arrow, transform.position, Quaternion.identity);
         if (go.TryGetComponent<ArrowFly>(out var af))
         {
@@ -38,15 +44,7 @@ public class Arrow : MonoBehaviour
         }
     }
 
-    void ShootCake()
-    {
-        GameObject cake = Resources.Load<GameObject>("Prefab/WatchOutForTheCupcake");
-        if (cake != null)
-        {
-            Instantiate(cake, transform.position, Quaternion.identity);
-        }
-    }
-    void Reset()
+    private void Reset()
     {
         _canShoot = true;
     }
