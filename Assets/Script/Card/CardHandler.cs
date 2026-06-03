@@ -103,7 +103,6 @@ public static class GameState
     public static Player Player;
     public static MonsterUI MonsterUI;
 
-    // ★ 关卡/波次相关
     public static int currentLevel;
     public static bool spawnOver;
     public static bool isGameOver;

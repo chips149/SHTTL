@@ -34,12 +34,9 @@ public class MarbleBehavior : MonoBehaviour
 
     void OnEnable()
     {
-        // 只有克隆弹珠（彩蛋）才显示彩带拖尾
-        if (eggPrefab != null)
-        {
-            eggPrefab.gameObject.SetActive(isClone);
-        }
+        eggPrefab.gameObject.SetActive(isClone);
     }
+
     void Start()
     {
         _marbleScale = transform.localScale;

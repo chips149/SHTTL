@@ -6,7 +6,6 @@ public class FuckMachine : MonoBehaviour
 {
     private Animator _ani;
     
-    // Start is called before the first frame update
     void Start()
     {
         _ani= GetComponent<Animator>();

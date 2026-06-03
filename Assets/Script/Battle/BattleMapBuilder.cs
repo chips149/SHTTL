@@ -13,12 +13,6 @@ public class BattleMapBuilder : MonoBehaviour
 
     public bool startWithSingle;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     public void OnValidate()
     {
         

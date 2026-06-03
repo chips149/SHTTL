@@ -40,7 +40,6 @@ public class MonsterHealth : MonoBehaviour, IBeHit
     {
         if (currentHp <= 0) return;
 
-        // 走容器事件管线，允许肉鸽效果修改伤害
         Container.Execute(data);
 
         int finalDamage = Mathf.RoundToInt(data.damage);
@@ -58,7 +57,6 @@ public class MonsterHealth : MonoBehaviour, IBeHit
     {
         if (currentHp <= 0) return;
 
-        // 直接扣血，不经过容器修饰（用于 Dot 等持续伤害）
         currentHp = Mathf.Max(0, currentHp - Mathf.RoundToInt(data.damage));
         UpdateHpBar();
         OnHealthChanged?.Invoke(currentHp, maxHp);

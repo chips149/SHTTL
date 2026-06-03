@@ -7,7 +7,7 @@ using UnityEngine.PlayerLoop;
 
 public class DotBuff : GameplayEffect,IGameplayEvent<FrameData>
 {
-    private const float Period = 0.5f;
+    private const float Period = 1f;
     private const float Duration = 8f;
     private float t;
     private float timer;

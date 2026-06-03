@@ -52,7 +52,7 @@ public class GiftBox : MonoBehaviour
             float angle = (i - 1) * spreadAngle;
             Vector2 dir = Quaternion.Euler(0, 0, angle) * Vector2.up;
             
-            var ball = ModulesManager.Get<BattleManager>().CreateNewMarble();
+            var ball = GameState.Bm.CreateNewMarble();
             ball.transform.position = transform.position;
             ball.isClone = true;
             ball.GetComponent<SpriteRenderer>().sprite = Sprites[Random.Range(0, 3)];

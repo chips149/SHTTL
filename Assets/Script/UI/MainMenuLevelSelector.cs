@@ -7,10 +7,8 @@ public class MainMenuLevelSelector : MonoBehaviour
 
     public static int SelectedLevelId { get; private set; }
 
-    [Header("Default")]
     public int defaultLevelId;
 
-    [Header("Scene")]
     public string battleSceneName = "GameScene";
 
     private void Awake()
@@ -23,7 +21,6 @@ public class MainMenuLevelSelector : MonoBehaviour
         SelectedLevelId = levelId;
         PlayerPrefs.SetInt(SelectedLevelPrefsKey, levelId);
         PlayerPrefs.Save();
-        Debug.Log($"已选择关卡：{levelId}");
     }
 
     public void EnterBattle()

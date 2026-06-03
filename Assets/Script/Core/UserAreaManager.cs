@@ -34,7 +34,6 @@ public class UserAreaManager
         };
     }
 
-    /// <summary>开始选择放置碰撞体构筑的位置，自动禁用相邻8格</summary>
     public void StartChosenColliderArea(Action<UserArea> chosen)
     {
         SetEnable(area => !IsAdjacentToOccupied(area.transform.position));

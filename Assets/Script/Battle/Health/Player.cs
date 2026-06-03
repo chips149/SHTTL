@@ -24,7 +24,6 @@ public class Player : MonoBehaviour, IBeHit
 
     public void BeHit(BeHitData data)
     {
-        // 走容器事件管线，允许肉鸽效果修改伤害
         Container.Execute(data);
 
         int finalDamage = Mathf.RoundToInt(data.damage);
@@ -37,7 +36,6 @@ public class Player : MonoBehaviour, IBeHit
 
     public void RemoveHp(RemoveHpData data)
     {
-        // 直接扣血，不经过容器修饰
         currentHealth = Mathf.Max(0, currentHealth - Mathf.RoundToInt(data.damage));
         UpdateHpBar();
 
@@ -67,7 +65,6 @@ public class Player : MonoBehaviour, IBeHit
     private void Die()
     {
         failPanel.SetActive(true);
-        Debug.Log("失败");
     }
 
     void UpdateHpBar()

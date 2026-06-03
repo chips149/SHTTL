@@ -3,9 +3,9 @@
     "levelId": 0,
     "levelName": "初入战场",
     "waves": [
-      { "enemyId": 0, "hp": 500,  "damage": 10 },
-      { "enemyId": 1, "hp": 800,  "damage": 12 },
-      { "enemyId": 2, "hp": 1000, "damage": 15 }
+      { "enemyId": 0, "hp": 100,  "damage": 10 },
+      { "enemyId": 1, "hp": 100,  "damage": 12 },
+      { "enemyId": 2, "hp": 100, "damage": 15 }
     ]
   },
   {

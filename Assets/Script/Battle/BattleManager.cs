@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Framework;
@@ -16,6 +15,7 @@ public class BattleManager : MonoBehaviour
     private Transform _spawnPoint;
 
     private readonly List<MarbleBehavior> _marbles = new();
+    private readonly HashSet<MarbleBehavior> _allMarbles = new();
 
     private void Awake()
     {
@@ -53,13 +53,15 @@ public class BattleManager : MonoBehaviour
     {
         var marble = Instantiate(marblePrefab);
         marble.bm = this;
+        _allMarbles.Add(marble);
         return marble;
     }
 
     private void ActionOnGet(MarbleBehavior marble)
     {
-        _marbles.Add(marble);
+        if (marble == null) return;
 
+        _marbles.Add(marble);
         marble.gameObject.SetActive(true);
     }
 
@@ -77,13 +79,16 @@ public class BattleManager : MonoBehaviour
 
     private void ActionOnDestroy(MarbleBehavior marble)
     {
-        Destroy(marble.gameObject);
+        _allMarbles.Remove(marble);
+        if (marble != null)
+            Destroy(marble.gameObject);
     }
 
     #endregion
 
     public void PushMarble(MarbleBehavior marble)
     {
+        if (!marble.gameObject.activeSelf) return;
         _marblePool.Release(marble);
     }
 
@@ -120,15 +125,31 @@ public class BattleManager : MonoBehaviour
 
     public MarbleBehavior CreateNewMarble()
     {
-        return _marblePool.Get();
+        var marble = _marblePool.Get();
+
+        // 池取出的弹珠可能已被销毁（场景卸载时序问题），重新创建
+        if (marble == null)
+        {
+            marble = Instantiate(marblePrefab);
+            marble.bm = this;
+            _allMarbles.Add(marble);
+            _marbles.Add(marble);
+        }
+
+        return marble;
     }
 
     public void OnDestroy()
     {
-        // _marblePool?.Dispose();
-        foreach (var marble in _marbles.Where(marble => marble))
+        // 销毁所有弹珠（池中空闲的 + 活跃的）
+        _marblePool?.Clear();
+
+        foreach (var marble in _allMarbles.ToArray())
         {
-            Destroy(marble.gameObject);
+            if (marble != null)
+                Destroy(marble.gameObject);
         }
+        _allMarbles.Clear();
+        _marbles.Clear();
     }
 }

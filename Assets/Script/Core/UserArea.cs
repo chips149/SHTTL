@@ -24,7 +24,6 @@ public class UserArea : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         _manager.OnAreaClick(this);
-        Debug.Log("OnPointerClick");
     }
 
     private void OnDestroy()
