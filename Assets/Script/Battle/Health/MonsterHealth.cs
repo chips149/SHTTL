@@ -1,7 +1,6 @@
 using System;
 using Framework.Gameplay;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MonsterHealth : MonoBehaviour, IBeHit
 {
@@ -9,7 +8,6 @@ public class MonsterHealth : MonoBehaviour, IBeHit
     public int currentHp;
     public GameObject vectoryPanel;
 
-    public Slider hpSlider;
     public bool showVictoryPanelOnDeath = true;
 
     public readonly GameplayContainer Container = new();
@@ -32,7 +30,6 @@ public class MonsterHealth : MonoBehaviour, IBeHit
     public void ResetHealth()
     {
         currentHp = maxHp;
-        UpdateHpBar();
         OnHealthChanged?.Invoke(currentHp, maxHp);
     }
 
@@ -42,9 +39,17 @@ public class MonsterHealth : MonoBehaviour, IBeHit
 
         Container.Execute(data);
 
+        // 只有弓箭(Arrow)和炮台(Cannon)触发受击动画
+        if (data.from == "Arrow" || data.from == "Cannon")
+        {
+            var ui = GetComponent<MonsterUI>();
+            ui?.PlayBeHit();
+        }
+
         int finalDamage = Mathf.RoundToInt(data.damage);
+
         currentHp = Mathf.Max(0, currentHp - finalDamage);
-        UpdateHpBar();
+
         OnHealthChanged?.Invoke(currentHp, maxHp);
 
         if (currentHp <= 0)
@@ -58,7 +63,6 @@ public class MonsterHealth : MonoBehaviour, IBeHit
         if (currentHp <= 0) return;
 
         currentHp = Mathf.Max(0, currentHp - Mathf.RoundToInt(data.damage));
-        UpdateHpBar();
         OnHealthChanged?.Invoke(currentHp, maxHp);
 
         if (currentHp <= 0)
@@ -80,14 +84,6 @@ public class MonsterHealth : MonoBehaviour, IBeHit
         if (showVictoryPanelOnDeath && vectoryPanel != null)
         {
             vectoryPanel.SetActive(true);
-        }
-    }
-
-    private void UpdateHpBar()
-    {
-        if (hpSlider != null)
-        {
-            hpSlider.value = (float)currentHp / maxHp;
         }
     }
 }

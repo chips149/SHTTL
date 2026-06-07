@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Framework.Gameplay;
 using UnityEngine;
@@ -65,6 +64,16 @@ public class Player : MonoBehaviour, IBeHit
     private void Die()
     {
         failPanel.SetActive(true);
+    }
+
+    /// <summary>
+    /// 复活按钮 OnClick 调用，回满血继续关卡
+    /// </summary>
+    public void Revive()
+    {
+        currentHealth = maxHealth;
+        UpdateHpBar();
+        failPanel.SetActive(false);
     }
 
     void UpdateHpBar()

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Framework;
 using UnityEngine;
@@ -9,11 +8,6 @@ public class UserArea : MonoBehaviour, IPointerClickHandler
 {
     private UserAreaManager _manager;
 
-    private void Awake()
-    {
-   
-        
-    }
     private void Start()
     {
         _manager = ModulesManager.Get<UserAreaManager>();

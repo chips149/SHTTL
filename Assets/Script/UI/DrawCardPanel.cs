@@ -30,4 +30,10 @@ public class DrawCardPanel : MonoBehaviour
         gameObject.SetActive(false);
         Portal.ResetAllPortals();
     }
+    
+    public void OnRefresh()
+    {
+        RandomCard();
+    }
+    
 }

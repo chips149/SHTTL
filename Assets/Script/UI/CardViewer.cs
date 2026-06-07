@@ -1,4 +1,5 @@
 using Framework;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class CardViewer : MonoBehaviour
 
     public Image img;
     public Text description;
+    public Text nameText;
 
     private Button _btn;
 
@@ -24,7 +26,8 @@ public class CardViewer : MonoBehaviour
         _drawCardPanel = drawCardPanel;
         _index = index;
         _cardData = data;
-        
+
+        nameText.text = _cardData.name;
         description.text = _cardData.description;
 
         Sprite sprite = Resources.Load<Sprite>(_cardData.imgPath);
@@ -35,12 +38,6 @@ public class CardViewer : MonoBehaviour
         _btn = GetComponent<Button>();
         _btn.onClick.RemoveAllListeners();
         _btn.onClick.AddListener(OnClick);
-    }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
     }
 
     // 卡片生效

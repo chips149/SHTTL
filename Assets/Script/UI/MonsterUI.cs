@@ -4,28 +4,40 @@ using UnityEngine.UI;
 public class MonsterUI : MonoBehaviour
 {
     public Image monsterImage;
+    public Animator animator;
 
-    public float scaleAdd = 0.2f;
-    public float maxScale = 1f;
+    public float scaleAdd = 0.3f;
+    public float maxScale = 1.3f;
     public float scaleSpeed = 2f;
 
     public int attackDamage = 5;
+    public float hitAnimDuration = 0.3f;
+    public float attackAnimDuration = 0.3f;
+
+    private static readonly int MoveHash = Animator.StringToHash("Move");
+    private static readonly int AtkHash = Animator.StringToHash("ATK");
+    private static readonly int BeHitHash = Animator.StringToHash("BeHit");
 
     private int _stage;
-    private float intervalTime = 5f;
+    private float _intervalTime;
 
     private float _targetScale;
     private bool _isScaling;
 
     void Start()
     {
+        if (animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
+        }
+
         monsterImage.transform.localScale = new Vector3(0.05f, 0.05f, 1f);
         _targetScale = 0.05f;
     }
 
     void Update()
     {
-        intervalTime += Time.deltaTime;
+        _intervalTime += Time.deltaTime;
 
         if (_isScaling)
         {
@@ -38,10 +50,12 @@ public class MonsterUI : MonoBehaviour
                 _isScaling = false;
             }
         }
+        if (animator != null)
+            animator.SetBool(MoveHash, _isScaling);
 
-        if (intervalTime >= 5f)
+        if (_intervalTime >= 5f)
         {
-            intervalTime = 0;
+            _intervalTime = 0;
             _stage++;
 
             if (_stage <= 4)
@@ -64,12 +78,25 @@ public class MonsterUI : MonoBehaviour
 
     private void Attack()
     {
-        IBeHit beHit = GameState.Player.GetComponent<IBeHit>();
+        if (animator != null)
+            animator.SetTrigger(AtkHash);
+        Invoke(nameof(OnAttackHit), attackAnimDuration);
+    }
+
+    public void OnAttackHit()
+    {
+        IBeHit beHit = GameState.Player?.GetComponent<IBeHit>();
         beHit?.BeHit(new BeHitData
         {
             damage = attackDamage,
             from = "Monster"
         });
+    }
+
+    public void PlayBeHit()
+    {
+        if (animator != null)
+            animator.SetTrigger(BeHitHash);
     }
 
     public void Knockback()

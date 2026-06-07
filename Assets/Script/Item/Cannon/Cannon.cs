@@ -33,7 +33,6 @@ public class Cannon : MonoBehaviour
         GameObject cannon = Resources.Load<GameObject>(CannonBulletPath);
         if (cannon == null)
         {
-            Debug.LogError($"炮弹预制体加载失败，请确认路径存在：Resources/{CannonBulletPath}.prefab");
             return;
         }
 

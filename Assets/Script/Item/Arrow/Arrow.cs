@@ -33,7 +33,6 @@ public class Arrow : MonoBehaviour
         GameObject arrow = Resources.Load<GameObject>(ArrowBulletPath);
         if (arrow == null)
         {
-            Debug.LogError($"弓箭预制体加载失败，请确认路径存在：Resources/{ArrowBulletPath}.prefab");
             return;
         }
 

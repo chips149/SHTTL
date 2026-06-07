@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Dice : MonoBehaviour
@@ -13,7 +11,7 @@ public class Dice : MonoBehaviour
         if (Time.time - _lastTriggerTime < Cooldown) return;
 
         _lastTriggerTime = Time.time;
-        
+
         int count = Random.Range(1, 7);
 
         for (int i = 0; i < count; i++)

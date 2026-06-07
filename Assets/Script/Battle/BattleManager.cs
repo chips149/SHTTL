@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Framework;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -27,14 +25,13 @@ public class BattleManager : MonoBehaviour
         GameState.MonsterUI = FindObjectOfType<MonsterUI>();
     }
 
-    // TODO:  世界之初
     public void Start()
     {
         _marblePool = new ObjectPool<MarbleBehavior>(
             ActionOnCreate,
             ActionOnGet,
             ActionOnRelease,
-            ActionOnDestroy);
+            null);
 
         EndTurn();
     }
@@ -65,7 +62,6 @@ public class BattleManager : MonoBehaviour
         marble.gameObject.SetActive(true);
     }
 
-
     private void ActionOnRelease(MarbleBehavior marble)
     {
         marble.gameObject.SetActive(false);
@@ -77,13 +73,6 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void ActionOnDestroy(MarbleBehavior marble)
-    {
-        _allMarbles.Remove(marble);
-        if (marble != null)
-            Destroy(marble.gameObject);
-    }
-
     #endregion
 
     public void PushMarble(MarbleBehavior marble)
@@ -92,12 +81,9 @@ public class BattleManager : MonoBehaviour
         _marblePool.Release(marble);
     }
 
-
-    // TODO: 一轮开始
     public void NewTurn()
     {
         PlayShootAnimation();
-        
         Time.timeScale = 1;
     }
 
@@ -115,11 +101,9 @@ public class BattleManager : MonoBehaviour
         marble.transform.position = new Vector3(x, y, -0.5f); 
     }
 
-    // TODO: 一轮结束
     private void EndTurn()
     {
         Time.timeScale = 0;
-        
         drawCardPanel.OpenDrawCardPanel();
     }
 
@@ -127,7 +111,6 @@ public class BattleManager : MonoBehaviour
     {
         var marble = _marblePool.Get();
 
-        // 池取出的弹珠可能已被销毁（场景卸载时序问题），重新创建
         if (marble == null)
         {
             marble = Instantiate(marblePrefab);
@@ -141,10 +124,7 @@ public class BattleManager : MonoBehaviour
 
     public void OnDestroy()
     {
-        // 销毁所有弹珠（池中空闲的 + 活跃的）
-        _marblePool?.Clear();
-
-        foreach (var marble in _allMarbles.ToArray())
+        foreach (var marble in new List<MarbleBehavior>(_allMarbles))
         {
             if (marble != null)
                 Destroy(marble.gameObject);

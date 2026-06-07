@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [Serializable]
 public class LevelConfigCollection
@@ -47,6 +48,9 @@ public class LevelMonsterSpawner : MonoBehaviour
     public GameObject victoryPanel;
     public bool pauseGameWhenLevelCleared = true;
 
+    [Header("UI")]
+    public Slider monsterHpSlider;
+
     public event Action<LevelConfig> OnLevelStarted;
     public event Action<MonsterWaveConfig, MonsterHealth> OnMonsterSpawned;
     public event Action<LevelConfig> OnLevelCleared;
@@ -85,13 +89,11 @@ public class LevelMonsterSpawner : MonoBehaviour
 
         if (_currentLevel == null)
         {
-            Debug.LogError($"未找到关卡配置：levelId = {levelId}");
             return;
         }
 
         if (spawnPoint == null)
         {
-            Debug.LogError("未找到怪物出生点，请在 LevelMonsterSpawner 上设置 spawnPoint，或将场景出生点命名为 spawnpoint / SpawnPoint / MonsterSpawnPoint。");
             return;
         }
 
@@ -109,7 +111,6 @@ public class LevelMonsterSpawner : MonoBehaviour
         TextAsset textAsset = Resources.Load<TextAsset>(levelConfigResourcePath);
         if (textAsset == null)
         {
-            Debug.LogError($"未找到关卡 JSON：Resources/{levelConfigResourcePath}.txt 或 .json");
             return null;
         }
 
@@ -122,7 +123,6 @@ public class LevelMonsterSpawner : MonoBehaviour
         LevelConfigCollection collection = JsonUtility.FromJson<LevelConfigCollection>(json);
         if (collection?.levels == null)
         {
-            Debug.LogError($"关卡 JSON 解析失败：Resources/{levelConfigResourcePath}");
             return null;
         }
 
@@ -146,7 +146,6 @@ public class LevelMonsterSpawner : MonoBehaviour
         GameObject prefab = GetMonsterPrefab(wave.enemyId);
         if (prefab == null)
         {
-            Debug.LogError($"未找到 enemyId = {wave.enemyId} 的怪物预制体。");
             return;
         }
 
@@ -154,11 +153,11 @@ public class LevelMonsterSpawner : MonoBehaviour
         _currentMonster = monster.GetComponent<MonsterHealth>();
         if (_currentMonster == null)
         {
-            Debug.LogError($"怪物预制体 {prefab.name} 缺少 MonsterHealth 组件。");
             Destroy(monster);
             return;
         }
 
+        _currentMonster.OnHealthChanged += OnMonsterHealthChanged;
         _currentMonster.Configure(wave.hp, false);
         _currentMonster.OnDeath += HandleMonsterDeath;
 
@@ -190,12 +189,21 @@ public class LevelMonsterSpawner : MonoBehaviour
         return string.IsNullOrEmpty(fallbackPath) ? null : Resources.Load<GameObject>(fallbackPath);
     }
 
+    private void OnMonsterHealthChanged(int cur, int max)
+    {
+        if (monsterHpSlider != null)
+        {
+            monsterHpSlider.value = (float)cur / max;
+        }
+    }
+
     private void HandleMonsterDeath()
     {
         MonsterHealth deadMonster = _currentMonster;
         if (deadMonster != null)
         {
             deadMonster.OnDeath -= HandleMonsterDeath;
+            deadMonster.OnHealthChanged -= OnMonsterHealthChanged;
         }
 
         StartCoroutine(SpawnNextMonsterAfterDeath(deadMonster));
@@ -228,7 +236,6 @@ public class LevelMonsterSpawner : MonoBehaviour
             Time.timeScale = 0;
         }
 
-        Debug.Log($"关卡完成：{_currentLevel.levelName}");
         OnLevelCleared?.Invoke(_currentLevel);
     }
 
