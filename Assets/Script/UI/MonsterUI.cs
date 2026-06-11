@@ -11,8 +11,9 @@ public class MonsterUI : MonoBehaviour
     public float scaleSpeed = 2f;
 
     public int attackDamage = 5;
-    public float hitAnimDuration = 0.3f;
     public float attackAnimDuration = 0.3f;
+
+    public float initScale = 0.05f;
 
     private static readonly int MoveHash = Animator.StringToHash("Move");
     private static readonly int AtkHash = Animator.StringToHash("ATK");
@@ -31,8 +32,8 @@ public class MonsterUI : MonoBehaviour
             animator = GetComponentInChildren<Animator>();
         }
 
-        monsterImage.transform.localScale = new Vector3(0.05f, 0.05f, 1f);
-        _targetScale = 0.05f;
+        monsterImage.transform.localScale = new Vector3(initScale, initScale, 1f);
+        _targetScale = initScale;
     }
 
     void Update()
@@ -106,7 +107,7 @@ public class MonsterUI : MonoBehaviour
             _stage--;
         }
 
-        _targetScale = 0.05f + _stage * scaleAdd;
+        _targetScale = initScale + _stage * scaleAdd;
         _targetScale = Mathf.Min(_targetScale, maxScale);
         _isScaling = true;
     }

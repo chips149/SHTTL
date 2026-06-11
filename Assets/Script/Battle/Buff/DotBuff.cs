@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using Framework.Gameplay;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class DotBuff : GameplayEffect,IGameplayEvent<FrameData>
 {

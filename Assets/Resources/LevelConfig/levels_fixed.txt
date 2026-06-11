@@ -1,0 +1,181 @@
+[
+  {
+    "levelId": 0,
+    "waves": [
+      { "enemyId": 0, "hp": 500, "damage": 10 },
+      { "enemyId": 0, "hp": 800, "damage": 12 }
+    ]
+  },
+  {
+    "levelId": 1,
+    "waves": [
+      { "enemyId": 0, "hp": 500, "damage": 10 },
+      { "enemyId": 0, "hp": 900, "damage": 15 },
+      { "enemyId": 1, "hp": 1200, "damage": 20 }
+    ]
+  },
+  {
+    "levelId": 2,
+    "waves": [
+      { "enemyId": 0, "hp": 800, "damage": 13 },
+      { "enemyId": 3, "hp": 1500, "damage": 22 },
+      { "enemyId": 0, "hp": 1300, "damage": 20 },
+      { "enemyId": 1, "hp": 2000, "damage": 25 }
+    ]
+  },
+  {
+    "levelId": 3,
+    "waves": [
+      { "enemyId": 0, "hp": 1000, "damage": 15 },
+      { "enemyId": 3, "hp": 1500, "damage": 22 },
+      { "enemyId": 1, "hp": 2000, "damage": 25 }
+    ]
+  },
+  {
+    "levelId": 4,
+    "waves": [
+      { "enemyId": 0, "hp": 1300, "damage": 15 },
+      { "enemyId": 3, "hp": 1800, "damage": 22 },
+      { "enemyId": 1, "hp": 2000, "damage": 25 },
+      { "enemyId": 3, "hp": 2600, "damage": 22 },
+      { "enemyId": 2, "hp": 3000, "damage": 30 }
+    ]
+  },
+  {
+    "levelId": 5,
+    "waves": [
+      { "enemyId": 0, "hp": 1300, "damage": 15 },
+      { "enemyId": 3, "hp": 1800, "damage": 22 },
+      { "enemyId": 1, "hp": 2000, "damage": 25 },
+      { "enemyId": 3, "hp": 2600, "damage": 22 },
+      { "enemyId": 2, "hp": 3000, "damage": 30 }
+    ]
+  },
+  {
+    "levelId": 6,
+    "waves": [
+      { "enemyId": 0, "hp": 1000, "damage": 15 },
+      { "enemyId": 3, "hp": 1500, "damage": 22 },
+      { "enemyId": 0, "hp": 1300, "damage": 20 },
+      { "enemyId": 1, "hp": 1600, "damage": 23 },
+      { "enemyId": 1, "hp": 1900, "damage": 25 }
+    ]
+  },
+  {
+    "levelId": 7,
+    "waves": [
+      { "enemyId": 0, "hp": 1200, "damage": 12 },
+      { "enemyId": 3, "hp": 1800, "damage": 22 },
+      { "enemyId": 3, "hp": 2100, "damage": 25 }
+    ]
+  },
+  {
+    "levelId": 8,
+    "waves": [
+      { "enemyId": 0, "hp": 800, "damage": 10 },
+      { "enemyId": 2, "hp": 2100, "damage": 21 },
+      { "enemyId": 1, "hp": 1800, "damage": 19 }
+    ]
+  },
+  {
+    "levelId": 9,
+    "waves": [
+      { "enemyId": 0, "hp": 1000, "damage": 15 },
+      { "enemyId": 3, "hp": 1500, "damage": 22 },
+      { "enemyId": 2, "hp": 2600, "damage": 25 },
+      { "enemyId": 1, "hp": 2000, "damage": 21 },
+      { "enemyId": 2, "hp": 2900, "damage": 28 }
+    ]
+  },
+  {
+    "levelId": 10,
+    "waves": [
+      { "enemyId": 0, "hp": 500, "damage": 15 },
+      { "enemyId": 3, "hp": 1600, "damage": 22 },
+      { "enemyId": 2, "hp": 2200, "damage": 25 },
+      { "enemyId": 0, "hp": 700, "damage": 14 },
+      { "enemyId": 2, "hp": 2800, "damage": 27 }
+    ]
+  },
+  {
+    "levelId": 11,
+    "waves": [
+      { "enemyId": 1, "hp": 600, "damage": 12 },
+      { "enemyId": 0, "hp": 900, "damage": 18 },
+      { "enemyId": 3, "hp": 1200, "damage": 20 },
+      { "enemyId": 0, "hp": 700, "damage": 14 }
+    ]
+  },
+  {
+    "levelId": 12,
+    "waves": [
+      { "enemyId": 1, "hp": 1000, "damage": 15 },
+      { "enemyId": 3, "hp": 1500, "damage": 22 },
+      { "enemyId": 3, "hp": 2000, "damage": 25 }
+    ]
+  },
+  {
+    "levelId": 13,
+    "waves": [
+      { "enemyId": 0, "hp": 900, "damage": 15 },
+      { "enemyId": 0, "hp": 1100, "damage": 28 },
+      { "enemyId": 0, "hp": 1000, "damage": 30 }
+    ]
+  },
+  {
+    "levelId": 14,
+    "waves": [
+      { "enemyId": 0, "hp": 1000, "damage": 15 },
+      { "enemyId": 0, "hp": 700, "damage": 14 },
+      { "enemyId": 3, "hp": 1500, "damage": 22 },
+      { "enemyId": 1, "hp": 2000, "damage": 25 }
+    ]
+  },
+  {
+    "levelId": 15,
+    "waves": [
+      { "enemyId": 3, "hp": 1900, "damage": 15 },
+      { "enemyId": 3, "hp": 2500, "damage": 28 },
+      { "enemyId": 3, "hp": 2900, "damage": 30 },
+      { "enemyId": 0, "hp": 700, "damage": 14 }
+    ]
+  },
+  {
+    "levelId": 16,
+    "waves": [
+      { "enemyId": 1, "hp": 1600, "damage": 12 },
+      { "enemyId": 0, "hp": 1900, "damage": 12 },
+      { "enemyId": 3, "hp": 2200, "damage": 12 },
+      { "enemyId": 2, "hp": 2700, "damage": 14 },
+      { "enemyId": 2, "hp": 2700, "damage": 14 }
+    ]
+  },
+  {
+    "levelId": 17,
+    "waves": [
+      { "enemyId": 0, "hp": 1000, "damage": 15 },
+      { "enemyId": 3, "hp": 1500, "damage": 22 },
+      { "enemyId": 1, "hp": 2000, "damage": 25 }
+    ]
+  },
+  {
+    "levelId": 18,
+    "waves": [
+      { "enemyId": 0, "hp": 1000, "damage": 15 },
+      { "enemyId": 0, "hp": 900, "damage": 16 },
+      { "enemyId": 3, "hp": 1700, "damage": 24 },
+      { "enemyId": 1, "hp": 2200, "damage": 27 }
+    ]
+  },
+  {
+    "levelId": 19,
+    "waves": [
+      { "enemyId": 0, "hp": 600, "damage": 20 },
+      { "enemyId": 2, "hp": 1500, "damage": 22 },
+      { "enemyId": 2, "hp": 2000, "damage": 25 },
+      { "enemyId": 2, "hp": 2300, "damage": 29 },
+      { "enemyId": 2, "hp": 2600, "damage": 25 },
+      { "enemyId": 2, "hp": 2900, "damage": 30 }
+    ]
+  }
+]

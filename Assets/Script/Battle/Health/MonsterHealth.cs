@@ -50,6 +50,10 @@ public class MonsterHealth : MonoBehaviour, IBeHit
 
         currentHp = Mathf.Max(0, currentHp - finalDamage);
 
+        // 在敌人周围随机位置弹出伤害数字
+        bool isHeavy = data.from == "Arrow" || data.from == "Cannon";
+        DamagePopup.Spawn(transform.position, finalDamage, null, isHeavy);
+
         OnHealthChanged?.Invoke(currentHp, maxHp);
 
         if (currentHp <= 0)

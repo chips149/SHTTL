@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CardProperty(1, "弹绳","2D/Item_Other_TanSheng_IMG/Item_Other_TanSheng_IMG", "碰撞—每次碰撞轻微把球向上弹起")]
+[CardProperty(1, "弹绳","2D/Item_Other_TanSheng_IMG/Item_Other_TanSheng_IMG", "触发把球向上弹开")]
 public class SkipRopeCardData : CardData
 {
     private readonly GameObject _prefab = Resources.Load<GameObject>("Prefab/Item/SkipRope");

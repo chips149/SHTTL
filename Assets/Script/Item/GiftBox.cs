@@ -1,13 +1,14 @@
-using System;
-using System.Collections.Generic;
-using Framework;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class GiftBox : MonoBehaviour
 {
     public ParticleSystem eggPrefab;
     public static Sprite[] Sprites;
+
+    [SerializeField] private Cooldown _cooldown;
+
+    public int spawnCount = 3;
+    public float spreadAngle = 40f;
 
     private void Awake()
     {
@@ -19,21 +20,13 @@ public class GiftBox : MonoBehaviour
         };
     }
 
-    public int spawnCount = 3;
-    public float spreadAngle = 40f;
-    public float coolTime = 5f;
-    private bool _canSpawn = true;
-
-    void OnEnable()
-    {
-        _canSpawn = true;
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Marble")) return;
-        if (!_canSpawn) return;
+        if (!other.CompareTag("Marble") || !_cooldown.CanActivate()) return;
+
         SpawnEgg();
+        _cooldown.Begin();
+
         ParticleSystem egg = Instantiate(eggPrefab, transform.position, Quaternion.identity);
         egg.Play();
         if (!egg.main.loop)
@@ -42,10 +35,9 @@ public class GiftBox : MonoBehaviour
         }
     }
 
+
     private void SpawnEgg()
     {
-        _canSpawn = false;
-        
         for (int i = 0; i < spawnCount; i++)
         {
             float angle = (i - 1) * spreadAngle;
@@ -61,12 +53,5 @@ public class GiftBox : MonoBehaviour
                 rb.velocity = dir * 5f;
             }
         }
-        Invoke("Reset", coolTime);
-        
-    }
-
-    private void Reset()
-    {
-        _canSpawn = true;
     }
 }

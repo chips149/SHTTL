@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CardProperty(0, "砰砰器", "2D/Item_Other_PengPengQi_IMG/Item_Other_PengPengQi1_IMG_DaiJi", "碰撞—将该球弹开")]
+[CardProperty(0, "砰砰器", "2D/Item_Other_PengPengQi_IMG/Item_Other_PengPengQi1_IMG_DaiJi", "触发把球反方向弹开")]
 public class FuckMachineCardData : CardData
 {
     private readonly GameObject _prefab = Resources.Load<GameObject>("Prefab/Item/FuckMachine");

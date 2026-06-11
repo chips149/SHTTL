@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CardProperty(5,"人参宝宝","2D/Item_Other_RenShen_IMG/Item_Other_RenShenBaoBao_IMG","碰撞—碰撞后该球会携带一个果实，携带果实的球若触碰攻击类构筑，则会将该携带物发射到神兽嘴里吃掉，玩家恢复生命值")]
+[CardProperty(5,"人参宝宝","2D/Item_Other_RenShen_IMG/Item_Other_RenShenBaoBao_IMG","触发球获得果实，若球触发攻击后，吃掉果实回血")]
 public class CakeCardData:CardData
 {
     private readonly GameObject _prefab=Resources.Load<GameObject>("Prefab/Item/Cake");

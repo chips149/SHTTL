@@ -1,0 +1,34 @@
+[
+  {
+    "levelId": 0,
+    "waves": [
+      { "enemyId": 0, "hp": 500,  "damage": 10 },
+      { "enemyId": 1, "hp": 800,  "damage": 12 },
+    ]
+  },
+  {
+    "levelId": 1,
+    "waves": [
+      { "enemyId": 1, "hp": 500,  "damage": 10 },
+      { "enemyId": 1, "hp": 900,  "damage": 15 },
+      { "enemyId": 2, "hp": 1200, "damage": 20 },
+    ]
+  },
+  {
+    "levelId": 2,
+    "waves": [
+      { "enemyId": 2, "hp": 800, "damage": 13 },
+      { "enemyId": 3, "hp": 1500, "damage": 22 },
+      { "enemyId": 1, "hp": 1300, "damage": 20 },
+      { "enemyId": 2, "hp": 2000, "damage": 25 }
+    ]
+  },
+  {
+    "levelId": 3,
+    "waves": [
+      { "enemyId": 3, "hp": 1000, "damage": 15 },
+      { "enemyId": 3, "hp": 1500, "damage": 22 },
+      { "enemyId": 2, "hp": 2000, "damage": 25 }
+    ]
+  }
+]

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 [Serializable]
 public class LevelConfigCollection
@@ -38,7 +39,7 @@ public class LevelMonsterSpawner : MonoBehaviour
     [Header("Level")]
     public int currentLevelId;
     public bool useSelectedLevelFromMainMenu = true;
-    public string levelConfigResourcePath = "LevelConfig/levels";
+    public string levelConfigResourcePath = "LevelConfig/levels_fixed";
 
     [Header("Spawn")]
     public Transform spawnPoint;
@@ -50,6 +51,10 @@ public class LevelMonsterSpawner : MonoBehaviour
 
     [Header("UI")]
     public Slider monsterHpSlider;
+    public TMP_Text monsterHpText;
+
+    [Header("VFX")]
+    public ParticleSystem spawnEffect;
 
     public event Action<LevelConfig> OnLevelStarted;
     public event Action<MonsterWaveConfig, MonsterHealth> OnMonsterSpawned;
@@ -120,6 +125,8 @@ public class LevelMonsterSpawner : MonoBehaviour
             json = $"{{\"levels\":{json}}}";
         }
 
+        json = RemoveTrailingCommas(json);
+
         LevelConfigCollection collection = JsonUtility.FromJson<LevelConfigCollection>(json);
         if (collection?.levels == null)
         {
@@ -127,6 +134,11 @@ public class LevelMonsterSpawner : MonoBehaviour
         }
 
         return collection.levels.Find(level => level.levelId == levelId);
+    }
+
+    private static string RemoveTrailingCommas(string json)
+    {
+        return System.Text.RegularExpressions.Regex.Replace(json, @",\s*(?=[}\]])", "");
     }
 
     private void SpawnNextMonster()
@@ -151,6 +163,14 @@ public class LevelMonsterSpawner : MonoBehaviour
 
         GameObject monster = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation, spawnPoint.parent);
         _currentMonster = monster.GetComponent<MonsterHealth>();
+
+        if (spawnEffect != null)
+        {
+            Vector3 effectPos = spawnPoint.position + new Vector3(0f, 0f, -1f);
+            ParticleSystem effect = Instantiate(spawnEffect, effectPos, Quaternion.identity);
+            effect.Play();
+            Destroy(effect.gameObject, effect.main.duration + effect.main.startLifetimeMultiplier);
+        }
         if (_currentMonster == null)
         {
             Destroy(monster);
@@ -195,6 +215,10 @@ public class LevelMonsterSpawner : MonoBehaviour
         {
             monsterHpSlider.value = (float)cur / max;
         }
+        if (monsterHpText != null)
+        {
+            monsterHpText.text = $"{cur}/{max}";
+        }
     }
 
     private void HandleMonsterDeath()
@@ -225,6 +249,9 @@ public class LevelMonsterSpawner : MonoBehaviour
     private void ClearLevel()
     {
         _levelEnded = true;
+
+        // 记录关卡通关
+        LevelProgressManager.CompleteLevel(currentLevelId);
 
         if (victoryPanel != null)
         {

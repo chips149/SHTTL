@@ -5,30 +5,37 @@ public class Portal : MonoBehaviour
 {
     public static List<Portal> portals = new List<Portal>();
 
-    private bool isUsed;
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] private Cooldown _cooldown;
+    private SpriteRenderer _spriteRenderer;
 
-    public ParticleSystem warpEnterEffect;  
+    public ParticleSystem warpEnterEffect;
     public ParticleSystem warpLeaveEffect;
 
-    void Awake()
+    private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void OnEnable()
     {
         portals.Add(this);
+        BattleManager.OnCardSelectPhase += OnCardSelectPhase;
     }
 
     private void OnDisable()
     {
         portals.Remove(this);
+        BattleManager.OnCardSelectPhase -= OnCardSelectPhase;
+    }
+
+    private void OnCardSelectPhase()
+    {
+        ResetVisual();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (isUsed) return;
+        if (!_cooldown.CanActivate()) return;
         if (!other.CompareTag("Marble")) return;
         if (portals.Count < 2) return;
 
@@ -55,27 +62,17 @@ public class Portal : MonoBehaviour
             warpEnterEffect.Play();
 
         other.transform.position = randomTarget.transform.position;
-        
+
         randomTarget.warpLeaveEffect.Play();
-        
-        isUsed = true;
-        spriteRenderer.color = Color.gray;
+
+        _cooldown.Begin();
     }
 
-    public void ResetPortal()
+
+    private void ResetVisual()
     {
-        isUsed = false;
-        spriteRenderer.color = Color.white;
-        
         warpEnterEffect.Stop();
         warpLeaveEffect.Stop();
     }
-
-    public static void ResetAllPortals()
-    {
-        foreach (var portal in portals)
-        {
-            portal.ResetPortal();
-        }
-    }
+    public static void ResetAllPortals() { }
 }

@@ -13,15 +13,87 @@ public class MarbleBehavior : MonoBehaviour
     public ParticleSystem eggPrefab;
     private SpriteRenderer _renderer;
     private Rigidbody2D _rb;
-    private GameObject _cupcakeFollower;
-    private CakeFly _cakeFly;
-    private static readonly Vector3 _cakeOffset = new Vector3(0, 0.3f, 0);
-    
-    private static readonly string CupcakePrefabPath = "Prefab/Bullet/WatchOutForTheCupcake";
-    
-    // property
+
+    private readonly Dictionary<string, GameObject> _followers = new();
+
+    private static readonly Vector3 _cakeOffset = new Vector3(0, 0.2f, 0);
+    private const float _cakeSmoothTime = 0.12f;
+    private const string CupcakePrefabPath = "Prefab/Bullet/WatchOutForTheCupcake";
+
     public bool hasCake;
     public bool isClone;
+
+
+    public void AttachFollower(string key, GameObject prefab, Vector3 offset,
+                               float smoothTime, Action<GameObject> onAttach = null)
+    {
+        if (_followers.ContainsKey(key)) return;
+
+        GameObject go = FollowerPool.Get(prefab);
+        go.transform.position = transform.position + offset;
+
+        Follower follower = go.GetComponent<Follower>();
+        if (follower == null) follower = go.AddComponent<Follower>();
+        follower.StartFollow(transform, offset, smoothTime);
+
+        onAttach?.Invoke(go);
+        _followers[key] = go;
+    }
+
+    public void DetachFollower(string key, Action<GameObject> onDetach = null)
+    {
+        if (!_followers.TryGetValue(key, out GameObject go)) return;
+        _followers.Remove(key);
+
+        Follower follower = go.GetComponent<Follower>();
+        if (follower != null)
+        {
+            follower.StopFollow();
+            follower.OnDetach();
+        }
+
+        onDetach?.Invoke(go);
+    }
+
+    public void ClearFollowers()
+    {
+        foreach (var kv in _followers)
+        {
+            var go = kv.Value;
+            if (go != null) Destroy(go);
+        }
+        _followers.Clear();
+    }
+
+
+    public void AttachCake()
+    {
+        if (hasCake) return;
+        hasCake = true;
+
+        GameObject prefab = Resources.Load<GameObject>(CupcakePrefabPath);
+        AttachFollower("cake", prefab, _cakeOffset, _cakeSmoothTime, go =>
+        {
+            go.GetComponent<CakeFly>().enabled = false;
+        });
+    }
+
+    public void DetachCake()
+    {
+        if (!hasCake) return;
+        hasCake = false;
+
+        DetachFollower("cake", go =>
+        {
+            CakeFly fly = go.GetComponent<CakeFly>();
+            if (fly != null)
+            {
+                fly.enabled = true;
+                go.transform.SetParent(null);
+            }
+        });
+    }
+
 
     private void Awake()
     {
@@ -41,8 +113,6 @@ public class MarbleBehavior : MonoBehaviour
         _marbleScale = transform.localScale;
     }
 
-    private Vector3 scale;
-
     private void OnCollisionEnter2D()
     {
         transform.localScale = new Vector3(0.5f, 0.47f, 0.5f);
@@ -54,53 +124,16 @@ public class MarbleBehavior : MonoBehaviour
         transform.localScale = _marbleScale;
     }
 
-    public void Tick(float dt)
-    {
-        if (!hasCake || _cupcakeFollower == null) return;
+    public void Tick(float dt) { }
 
-        _cupcakeFollower.transform.position = transform.position + _cakeOffset;
-    }
-    
-
-    public void AttachCake()
-    {
-        if (hasCake) return;
-        hasCake = true;
-
-        GameObject prefab = Resources.Load<GameObject>(CupcakePrefabPath);
-        _cupcakeFollower = Instantiate(prefab, transform.position + _cakeOffset, Quaternion.identity);
-
-        _cakeFly = _cupcakeFollower.GetComponent<CakeFly>();
-        _cakeFly.enabled = false;
-    }
-
-    public void DetachCake()
-    {
-        if (!hasCake || _cupcakeFollower == null) return;
-        hasCake = false;
-
-        _cakeFly.enabled = true;
-
-        _cupcakeFollower = null;
-        _cakeFly = null;
-    }
-
-    //  TODO: 归位
     private void OnDisable()
     {
         _renderer.sprite = _sprite;
         isClone = false;
         hasCake = false;
         eggPrefab.gameObject.SetActive(false);
-
-        if (_cupcakeFollower != null)
-        {
-            Destroy(_cupcakeFollower);
-            _cupcakeFollower = null;
-            _cakeFly = null;
-        }
+        ClearFollowers();
     }
-
 
     private void OnTriggerEnter2D(Collider2D other)
     {

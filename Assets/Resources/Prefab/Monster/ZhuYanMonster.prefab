@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2168944515895274459
+--- !u!1 &3238082453501529341
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,50 +8,54 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2011985853235204595}
-  - component: {fileID: 7522393347964285121}
-  - component: {fileID: 9018464538793487976}
+  - component: {fileID: 1771737615011136810}
+  - component: {fileID: 4926759529855890734}
+  - component: {fileID: 5149158561227324818}
+  - component: {fileID: 8459998016380045838}
+  - component: {fileID: 1875089058175653257}
+  - component: {fileID: 8735566662915046144}
+  - component: {fileID: 8738597834413279890}
   m_Layer: 5
-  m_Name: MonsterImage
-  m_TagString: Untagged
+  m_Name: ZhuYanMonster
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &2011985853235204595
+--- !u!224 &1771737615011136810
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2168944515895274459}
+  m_GameObject: {fileID: 3238082453501529341}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 1771737615011136810}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -23, y: -53}
-  m_SizeDelta: {x: 400, y: 400}
+  m_AnchoredPosition: {x: 41.7, y: -64.9}
+  m_SizeDelta: {x: 469.78, y: 484.28}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &7522393347964285121
+--- !u!222 &4926759529855890734
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2168944515895274459}
+  m_GameObject: {fileID: 3238082453501529341}
   m_CullTransparentMesh: 1
---- !u!114 &9018464538793487976
+--- !u!114 &5149158561227324818
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2168944515895274459}
+  m_GameObject: {fileID: 3238082453501529341}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -75,45 +79,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &3238082453501529341
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1771737615011136810}
-  - component: {fileID: 1875089058175653257}
-  - component: {fileID: 8735566662915046144}
-  - component: {fileID: 8738597834413279890}
-  m_Layer: 5
-  m_Name: ZhuYanMonster
-  m_TagString: Monster
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1771737615011136810
-RectTransform:
+--- !u!95 &8459998016380045838
+Animator:
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3238082453501529341}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2011985853235204595}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.67, y: -219.72}
-  m_SizeDelta: {x: 1090.48, y: 607.19}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3e41d1fec3a1430428b1d0b1790fcdee, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1875089058175653257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,14 +112,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da08f5ca7dace7942bc8e61ef80edc77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterImage: {fileID: 9018464538793487976}
-  animator: {fileID: 0}
-  scaleAdd: 0.3
+  monsterImage: {fileID: 5149158561227324818}
+  animator: {fileID: 8459998016380045838}
+  scaleAdd: 0.1
   maxScale: 1
   scaleSpeed: 2
-  attackDamage: 10
-  hitAnimDuration: 0.3
+  attackDamage: 5
   attackAnimDuration: 0.3
+  initScale: 0.5
 --- !u!114 &8735566662915046144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,7 +168,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -9.0456505, y: -59.550537}
+  m_Offset: {x: -1.8959045, y: -23.5867}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -193,5 +179,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 203.01962, y: 293.47614}
+  m_Size: {x: 358.85944, y: 422.36523}
   m_EdgeRadius: 0

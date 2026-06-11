@@ -47,6 +47,12 @@ public class UserAreaManager
         };
     }
 
+    public void RemovePlacedPosition(Vector3 pos)
+    {
+        // 移除该位置相邻1格范围内的记录，使格子重新可用
+        _colliderPlacedPositions.RemoveAll(p => Vector3.Distance(p, pos) < NeighborDistance);
+    }
+
     private bool IsAdjacentToOccupied(Vector3 pos)
     {
         foreach (var occupied in _colliderPlacedPositions)

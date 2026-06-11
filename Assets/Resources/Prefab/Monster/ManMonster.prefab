@@ -114,12 +114,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterImage: {fileID: 5532521157713592775}
   animator: {fileID: 13386705475705654}
-  scaleAdd: 0.25
+  scaleAdd: 0.1
   maxScale: 1
   scaleSpeed: 2
   attackDamage: 5
-  hitAnimDuration: 0.3
   attackAnimDuration: 0.3
+  initScale: 0.5
 --- !u!114 &2133791088326954131
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,29 +4,29 @@ public class Arrow : MonoBehaviour
 {
     private const string ArrowBulletPath = "Prefab/Bullet/ArrowBullet";
 
-    public float coolTime = 2f;
-    private bool _canShoot = true;
+    [SerializeField] private Cooldown _cooldown;
 
-    private void OnEnable()
+    private void Awake()
     {
-        _canShoot = true;
+        var renderer = GetComponent<SpriteRenderer>();
+        renderer.sortingOrder = 0;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Marble") || !_canShoot) return;
+        if (!other.CompareTag("Marble") || !_cooldown.CanActivate()) return;
 
         MarbleBehavior marble = other.GetComponent<MarbleBehavior>();
         ShootArrow(marble.isClone);
 
-        _canShoot = false;
-        Invoke(nameof(Reset), coolTime);
+        _cooldown.Begin();
 
         if (marble.hasCake)
         {
             marble.DetachCake();
         }
     }
+
 
     private void ShootArrow(bool isEgg)
     {
@@ -41,10 +41,5 @@ public class Arrow : MonoBehaviour
         {
             af.isEggBoosted = isEgg;
         }
-    }
-
-    private void Reset()
-    {
-        _canShoot = true;
     }
 }

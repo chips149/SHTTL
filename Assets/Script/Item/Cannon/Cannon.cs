@@ -4,29 +4,23 @@ public class Cannon : MonoBehaviour
 {
     private const string CannonBulletPath = "Prefab/Bullet/CannonBullet";
 
-    public float coolTime = 2f;
-    private bool _canShoot = true;
-
-    private void OnEnable()
-    {
-        _canShoot = true;
-    }
+    [SerializeField] private Cooldown _cooldown;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Marble") || !_canShoot) return;
+        if (!other.CompareTag("Marble") || !_cooldown.CanActivate()) return;
 
         MarbleBehavior marble = other.GetComponent<MarbleBehavior>();
         ShootCannon(marble.isClone);
 
-        _canShoot = false;
-        Invoke(nameof(ResetShoot), coolTime);
+        _cooldown.Begin();
 
         if (marble.hasCake)
         {
             marble.DetachCake();
         }
     }
+
 
     private void ShootCannon(bool isEgg)
     {
@@ -41,11 +35,6 @@ public class Cannon : MonoBehaviour
         {
             cf.isEggBoosted = isEgg;
         }
-    }
-
-    private void ResetShoot()
-    {
-        _canShoot = true;
     }
 }
 

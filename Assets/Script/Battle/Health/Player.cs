@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Framework.Gameplay;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour, IBeHit
     public GameObject failPanel;
 
     public Slider healthSlider;
+    public TMP_Text hpText;
 
     public readonly GameplayContainer Container = new();
 
@@ -55,10 +57,8 @@ public class Player : MonoBehaviour, IBeHit
         };
         Container.Execute(takeHealEventData);
         
-        currentHealth = Mathf.Max(0, currentHealth + takeHealEventData.healAmount);
+        currentHealth = Mathf.Min(maxHealth, currentHealth + takeHealEventData.healAmount);
         UpdateHpBar();
-
-        if (currentHealth > 100) ;
     }
 
     private void Die()
@@ -79,6 +79,8 @@ public class Player : MonoBehaviour, IBeHit
     void UpdateHpBar()
     {
         healthSlider.value = (float)currentHealth / maxHealth;
+        if (hpText != null)
+            hpText.text = $"{currentHealth}/{maxHealth}";
     }
 }
 

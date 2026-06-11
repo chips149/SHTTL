@@ -6,6 +6,9 @@ using Random = UnityEngine.Random;
 
 public class BattleManager : MonoBehaviour
 {
+    /// <summary>进入选卡阶段时触发，所有构筑应在此重置冷却</summary>
+    public static event System.Action OnCardSelectPhase;
+
     public MarbleBehavior marblePrefab;
     public DrawCardPanel drawCardPanel;
     private ObjectPool<MarbleBehavior> _marblePool;
@@ -104,6 +107,7 @@ public class BattleManager : MonoBehaviour
     private void EndTurn()
     {
         Time.timeScale = 0;
+        OnCardSelectPhase?.Invoke();
         drawCardPanel.OpenDrawCardPanel();
     }
 
