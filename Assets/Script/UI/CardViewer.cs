@@ -13,6 +13,7 @@ public class CardViewer : MonoBehaviour
     public Image img;
     public Text description;
     public Text nameText;
+    public TMP_Text cooldownText;
 
     private Button _btn;
 
@@ -22,7 +23,6 @@ public class CardViewer : MonoBehaviour
     public void Initialize(DrawCardPanel drawCardPanel, int index, CardData data)
     {
         _um = ModulesManager.Get<UserAreaManager>();
-        // 显示卡片相关
         _drawCardPanel = drawCardPanel;
         _index = index;
         _cardData = data;
@@ -31,21 +31,57 @@ public class CardViewer : MonoBehaviour
         description.text = _cardData.description;
 
         Sprite sprite = Resources.Load<Sprite>(_cardData.imgPath);
-        img.sprite = sprite; 
+        img.sprite = sprite;
 
+        ShowCooldown();
 
-        // 组件组合
         _btn = GetComponent<Button>();
         _btn.onClick.RemoveAllListeners();
         _btn.onClick.AddListener(OnClick);
     }
 
-    // 卡片生效
+    private void ShowCooldown()
+    {
+        if (cooldownText == null) return;
+
+        float coolTime = GetCardCoolTime(_cardData.id);
+        if (coolTime > 0)
+        {
+            cooldownText.text = $"{coolTime}s";
+            cooldownText.gameObject.SetActive(true);
+        }
+        else
+        {
+            cooldownText.gameObject.SetActive(false);
+        }
+    }
+
+    private static float GetCardCoolTime(int cardId)
+    {
+        string prefabPath = cardId switch
+        {
+            0 => "Prefab/Item/FuckMachine",
+            2 => "Prefab/Item/Portal",
+            3 => "Prefab/Item/Arrow",
+            4 => "Prefab/Item/Cannon",
+            5 => "Prefab/Item/Cake",
+            6 => "Prefab/Item/GiftBox",
+            7 => "Prefab/Item/Dice",
+            _ => null,
+        };
+
+        if (prefabPath == null) return 0;
+
+        GameObject prefab = Resources.Load<GameObject>(prefabPath);
+        if (prefab == null) return 0;
+
+        Cooldown cd = prefab.GetComponent<Cooldown>();
+        return cd != null ? cd.CoolTime : 0;
+    }
+
     private void OnClick()
     {
         _drawCardPanel.CloseDrawCardPanel();
         _cardData.OnChosen();
     }
 }
-
-

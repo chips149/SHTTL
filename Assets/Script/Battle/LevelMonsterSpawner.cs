@@ -44,6 +44,8 @@ public class LevelMonsterSpawner : MonoBehaviour
     [Header("Spawn")]
     public Transform spawnPoint;
     public List<MonsterPrefabMapping> monsterPrefabs = new();
+    [Tooltip("显示剩余敌人提示后延迟刷怪的时间（秒）")]
+    public float preSpawnDelay = 1.5f;
 
     [Header("Result")]
     public GameObject victoryPanel;
@@ -58,6 +60,7 @@ public class LevelMonsterSpawner : MonoBehaviour
 
     public event Action<LevelConfig> OnLevelStarted;
     public event Action<MonsterWaveConfig, MonsterHealth> OnMonsterSpawned;
+    public event Action<MonsterWaveConfig> OnWaveStarting;
     public event Action<LevelConfig> OnLevelCleared;
 
     private readonly Dictionary<int, GameObject> _prefabMap = new();
@@ -161,6 +164,15 @@ public class LevelMonsterSpawner : MonoBehaviour
             return;
         }
 
+        // 先弹出剩余敌人提示，延迟后再真正刷怪
+        OnWaveStarting?.Invoke(wave);
+        StartCoroutine(DelayedSpawn(wave, prefab));
+    }
+
+    private IEnumerator DelayedSpawn(MonsterWaveConfig wave, GameObject prefab)
+    {
+        yield return new WaitForSeconds(preSpawnDelay);
+
         GameObject monster = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation, spawnPoint.parent);
         _currentMonster = monster.GetComponent<MonsterHealth>();
 
@@ -174,7 +186,7 @@ public class LevelMonsterSpawner : MonoBehaviour
         if (_currentMonster == null)
         {
             Destroy(monster);
-            return;
+            yield break;
         }
 
         _currentMonster.OnHealthChanged += OnMonsterHealthChanged;

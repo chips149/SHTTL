@@ -3,6 +3,7 @@ using UnityEngine;
 public class Cooldown : MonoBehaviour
 {
     [SerializeField] private float coolTime = 2f;
+    public float CoolTime => coolTime;
 
     [Header("Shader冷却")]
     [SerializeField] private string _shaderProp = "_Cooldown";

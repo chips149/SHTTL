@@ -72,7 +72,7 @@ Material:
     - _ColorMask: 15
     - _CoolDownProgress: 0
     - _CoolProgress: 0
-    - _Cooldown: 1
+    - _Cooldown: 0.837
     - _CullMode: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
