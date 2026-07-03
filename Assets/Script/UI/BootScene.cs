@@ -7,7 +7,7 @@ public class BootScene : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.PlayBGM(Resources.Load<AudioClip>("Sound/bgm/BootSence"));
+        AudioManager.PlayBGM(Resources.Load<AudioClip>("Sound/bgm/背景音乐"));
     }
 
     /// <summary>给"开始游戏"按钮绑定此方法</summary>

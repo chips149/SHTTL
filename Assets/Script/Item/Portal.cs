@@ -41,7 +41,6 @@ public class Portal : MonoBehaviour
         if (!other.CompareTag("Marble")) return;
         if (portals.Count < 2) return;
 
-        AudioManager.PlaySFX(PortalSfx);
         float minY = float.MaxValue;
         foreach (var p in portals)
         {
@@ -68,6 +67,7 @@ public class Portal : MonoBehaviour
 
         randomTarget.warpLeaveEffect.Play();
 
+        AudioManager.PlaySFX(PortalSfx);
         _cooldown.Begin();
     }
 

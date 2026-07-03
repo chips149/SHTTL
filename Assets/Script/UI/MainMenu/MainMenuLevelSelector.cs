@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class MainMenuLevelSelector : MonoBehaviour
 {
@@ -49,6 +49,7 @@ public class MainMenuLevelSelector : MonoBehaviour
             nextPageBtn.onClick.AddListener(NextPage);
     }
 
+    // ========== 初始化 ==========
 
     private void CollectButtons()
     {
@@ -95,6 +96,7 @@ public class MainMenuLevelSelector : MonoBehaviour
             : 1;
     }
 
+    // ========== 显示与翻页 ==========
 
     private void UpdateDisplay()
     {
@@ -141,14 +143,18 @@ public class MainMenuLevelSelector : MonoBehaviour
 
     // ========== 选中逻辑 ==========
 
+    /// <summary>选择关卡</summary>
     public void SelectLevel(int levelId)
     {
+        // 只更新前后两个按钮的图片
         int newIndex = _levelIds.IndexOf(levelId);
         if (newIndex < 0) return;
 
+        // 取消旧选中
         if (_previousSelectedIndex >= 0 && _previousSelectedIndex < _levelImages.Count)
             SetImageSprite(_previousSelectedIndex, false);
 
+        // 设置新选中
         SetImageSprite(newIndex, true);
         _previousSelectedIndex = newIndex;
 
@@ -157,6 +163,7 @@ public class MainMenuLevelSelector : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    /// <summary>刷新所有可见按钮的选中状态（翻页后用）</summary>
     private void ApplySelection()
     {
         int start = _currentPage * pageSize;
@@ -179,6 +186,7 @@ public class MainMenuLevelSelector : MonoBehaviour
         _levelImages[index].sprite = selected ? _selectedSprites[index] : _normalSprites[index];
     }
 
+    // ========== 工具 ==========
 
     private static int ParseLevelId(string name)
     {
