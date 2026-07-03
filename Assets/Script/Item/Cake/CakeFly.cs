@@ -1,9 +1,10 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CakeFly : MonoBehaviour
 {
     public int healAmount = 10;
+    private static AudioClip _eatCakeSfx;
+    private static AudioClip EatCakeSfx => _eatCakeSfx ??= Resources.Load<AudioClip>("Sound/SFX/EatCake");
     public int speed = 10;
     private Transform target;
     
@@ -29,6 +30,7 @@ public class CakeFly : MonoBehaviour
         Player health = target.GetComponent<Player>();
         
         health.TakeHeal(healAmount);
+        AudioManager.PlaySFX(EatCakeSfx);
         
         Destroy(gameObject);
     }

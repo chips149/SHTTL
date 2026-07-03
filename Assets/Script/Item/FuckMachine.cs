@@ -1,9 +1,10 @@
-using System.Collections.Generic;
 using Framework;
 using UnityEngine;
 
 public class FuckMachine : MonoBehaviour
 {
+    private static AudioClip _fuckMachineSfx;
+    private static AudioClip FuckMachineSfx => _fuckMachineSfx ??= Resources.Load<AudioClip>("Sound/SFX/FuckMachine");
     private Animator _ani;
     private UserAreaManager _areaManager;
 
@@ -20,7 +21,9 @@ public class FuckMachine : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!collision.gameObject.CompareTag("Marble")) return; 
+        if (!collision.gameObject.CompareTag("Marble")) return;
+        
+        AudioManager.PlaySFX(FuckMachineSfx);
         Vector2 hitNormal = collision.contacts[0].normal;
         Vector2 reflectDir=Vector2.Reflect(collision.relativeVelocity, hitNormal);
         _ani.SetTrigger("Atk" );

@@ -30,6 +30,8 @@ public class BattleManager : MonoBehaviour
 
     public void Start()
     {
+        BattleStats.Reset();
+
         _marblePool = new ObjectPool<MarbleBehavior>(
             ActionOnCreate,
             ActionOnGet,
@@ -123,6 +125,7 @@ public class BattleManager : MonoBehaviour
             _marbles.Add(marble);
         }
 
+        BattleStats.MarbleSpawned++;
         return marble;
     }
 

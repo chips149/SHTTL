@@ -3,6 +3,8 @@ using UnityEngine;
 public class CannonFly : MonoBehaviour
 {
     public int damage = 10;
+    private static AudioClip _cannonAtkSfx;
+    private static AudioClip CannonAtkSfx => _cannonAtkSfx ??= Resources.Load<AudioClip>("Sound/SFX/CannonAtk");
     public float speed = 8f;
     public bool isEggBoosted;
 
@@ -51,6 +53,7 @@ public class CannonFly : MonoBehaviour
                 damage = finishDamage,
                 from = "Cannon"
             });
+            AudioManager.PlaySFX(CannonAtkSfx);
             ui?.Knockback();
         }
 

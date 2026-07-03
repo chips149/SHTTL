@@ -1,9 +1,10 @@
-using System.Collections.Generic;
 using Framework;
 using UnityEngine;
 
 public class SkipRope : MonoBehaviour
 {
+    private static AudioClip _skipRopeSfx;
+    private static AudioClip SkipRopeSfx => _skipRopeSfx ??= Resources.Load<AudioClip>("Sound/SFX/SkipRope");
     private UserAreaManager _areaManager;
 
     private void Start()
@@ -20,6 +21,7 @@ public class SkipRope : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Marble")) return;
         
+        AudioManager.PlaySFX(SkipRopeSfx);
         var force = new Vector2(0,4);
         collision.rigidbody.AddForce(force, ForceMode2D.Impulse);
     } 

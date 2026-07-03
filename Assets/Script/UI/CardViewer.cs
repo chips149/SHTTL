@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class CardViewer : MonoBehaviour
 {
+    private static AudioClip _chooseCardSfx;
+    private static AudioClip ChooseCardSfx => _chooseCardSfx ??= Resources.Load<AudioClip>("Sound/SFX/ChooseCard");
     private DrawCardPanel _drawCardPanel;
     private int _index;
 
@@ -44,16 +46,8 @@ public class CardViewer : MonoBehaviour
     {
         if (cooldownText == null) return;
 
-        float coolTime = GetCardCoolTime(_cardData.id);
-        if (coolTime > 0)
-        {
-            cooldownText.text = $"{coolTime}s";
-            cooldownText.gameObject.SetActive(true);
-        }
-        else
-        {
-            cooldownText.gameObject.SetActive(false);
-        }
+        cooldownText.text = $"{GetCardCoolTime(_cardData.id)}s";
+        cooldownText.gameObject.SetActive(true);
     }
 
     private static float GetCardCoolTime(int cardId)
@@ -81,6 +75,7 @@ public class CardViewer : MonoBehaviour
 
     private void OnClick()
     {
+        AudioManager.PlaySFX(ChooseCardSfx);
         _drawCardPanel.CloseDrawCardPanel();
         _cardData.OnChosen();
     }

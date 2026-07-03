@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
+    private static AudioClip _portalSfx;
+    private static AudioClip PortalSfx => _portalSfx ??= Resources.Load<AudioClip>("Sound/SFX/Portal");
     public static List<Portal> portals = new List<Portal>();
 
     [SerializeField] private Cooldown _cooldown;
@@ -39,6 +41,7 @@ public class Portal : MonoBehaviour
         if (!other.CompareTag("Marble")) return;
         if (portals.Count < 2) return;
 
+        AudioManager.PlaySFX(PortalSfx);
         float minY = float.MaxValue;
         foreach (var p in portals)
         {

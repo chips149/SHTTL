@@ -135,6 +135,8 @@ MonoBehaviour:
   maxHp: 500
   currentHp: 0
   vectoryPanel: {fileID: 0}
+  hitEffectPrefab: {fileID: 5458344101633960269, guid: 6989b57e41269c54f9b8445d82180ce6, type: 3}
+  nailHitEffectPrefab: {fileID: 7790301718422141905, guid: 9b660adf1ad667c499a5d63c09c91d71, type: 3}
   showVictoryPanelOnDeath: 1
 --- !u!61 &8738597834413279890
 BoxCollider2D:

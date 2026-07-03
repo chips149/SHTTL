@@ -30,6 +30,9 @@ public class DamagePopup : MonoBehaviour
         {
             _canvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
+
+        // 文字渲染层级前移
+        _tmpText.GetComponent<Renderer>().sortingOrder = 100;
     }
 
     public static DamagePopup Spawn(Vector3 worldPosition, float damage, float? customOffsetRadius = null, bool isHeavy = false)

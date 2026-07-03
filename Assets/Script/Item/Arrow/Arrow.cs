@@ -3,6 +3,8 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     private const string ArrowBulletPath = "Prefab/Bullet/ArrowBullet";
+    private static AudioClip _arrowSfx;
+    private static AudioClip ArrowSfx => _arrowSfx ??= Resources.Load<AudioClip>("Sound/SFX/Arrow");
 
     [SerializeField] private Cooldown _cooldown;
 
@@ -19,6 +21,7 @@ public class Arrow : MonoBehaviour
         MarbleBehavior marble = other.GetComponent<MarbleBehavior>();
         ShootArrow(marble.isClone);
 
+        AudioManager.PlaySFX(ArrowSfx);
         _cooldown.Begin();
 
         if (marble.hasCake)

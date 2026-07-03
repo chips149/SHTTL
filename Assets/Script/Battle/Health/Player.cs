@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Framework.Gameplay;
 using TMPro;
@@ -14,13 +15,20 @@ public class Player : MonoBehaviour, IBeHit
 
     public Slider healthSlider;
     public TMP_Text hpText;
+    public SpriteRenderer spriteRenderer;
+    public GameObject healEffect;
 
     public readonly GameplayContainer Container = new();
 
     void Start()
     {
         currentHealth = maxHealth;
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponent<SpriteRenderer>();
         UpdateHpBar();
+
+        if (healEffect != null)
+            healEffect.SetActive(false);
     }
 
     public void BeHit(BeHitData data)
@@ -30,6 +38,9 @@ public class Player : MonoBehaviour, IBeHit
         int finalDamage = Mathf.RoundToInt(data.damage);
         currentHealth = Mathf.Max(0, currentHealth - finalDamage);
         UpdateHpBar();
+
+        if (data.from == "Monster")
+            StartCoroutine(FlashRed());
 
         if (currentHealth > 0) return;
         Die();
@@ -59,6 +70,19 @@ public class Player : MonoBehaviour, IBeHit
         
         currentHealth = Mathf.Min(maxHealth, currentHealth + takeHealEventData.healAmount);
         UpdateHpBar();
+
+        if (healEffect != null)
+        {
+            healEffect.SetActive(false);
+            healEffect.SetActive(true);
+        }
+    }
+
+    private IEnumerator FlashRed()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        spriteRenderer.color = Color.white;
     }
 
     private void Die()

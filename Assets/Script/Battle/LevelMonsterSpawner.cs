@@ -87,6 +87,8 @@ public class LevelMonsterSpawner : MonoBehaviour
         }
 
         StartLevel(currentLevelId);
+
+        AudioManager.PlayBGM(Resources.Load<AudioClip>("Sound/bgm/GameSence"));
     }
 
     public void StartLevel(int levelId)
@@ -235,6 +237,8 @@ public class LevelMonsterSpawner : MonoBehaviour
 
     private void HandleMonsterDeath()
     {
+        BattleStats.EnemiesDefeated++;
+
         MonsterHealth deadMonster = _currentMonster;
         if (deadMonster != null)
         {

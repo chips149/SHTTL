@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class DrawCardPanel : MonoBehaviour
 {
+    private static AudioClip _startChooseCardSfx;
+    private static AudioClip _chooseCardSfx;
+    private static AudioClip StartChooseCardSfx => _startChooseCardSfx ??= Resources.Load<AudioClip>("Sound/SFX/StartChooseCard");
+    private static AudioClip ChooseCardSfx => _chooseCardSfx ??= Resources.Load<AudioClip>("Sound/SFX/ChooseCard");
     private CardViewer[] _viewers;
 
     void RandomCard()
@@ -21,7 +25,7 @@ public class DrawCardPanel : MonoBehaviour
     {
         RandomCard();
         gameObject.SetActive(true);
-        
+        AudioManager.PlaySFX(StartChooseCardSfx);
     }
 
 

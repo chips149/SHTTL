@@ -29,6 +29,7 @@ public class UserAreaManager
             SetEnable(false);
             OnClick = null;
             
+            BattleStats.ItemsPlaced++;
             chosen.Invoke(area);
         };
     }
@@ -43,6 +44,7 @@ public class UserAreaManager
             SetEnable(false);
             OnClick = null;
 
+            BattleStats.ItemsPlaced++;
             chosen.Invoke(area);
         };
     }

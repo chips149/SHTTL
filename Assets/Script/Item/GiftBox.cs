@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class GiftBox : MonoBehaviour
 {
+    private static AudioClip _giftBoxSfx;
+    private static AudioClip GiftBoxSfx => _giftBoxSfx ??= Resources.Load<AudioClip>("Sound/SFX/GiftBox");
     public ParticleSystem eggPrefab;
     public static Sprite[] Sprites;
 
@@ -24,6 +26,7 @@ public class GiftBox : MonoBehaviour
     {
         if (!other.CompareTag("Marble") || !_cooldown.CanActivate()) return;
 
+        AudioManager.PlaySFX(GiftBoxSfx);
         SpawnEgg();
         _cooldown.Begin();
 

@@ -81,7 +81,6 @@ public class MonsterUI : MonoBehaviour
     {
         if (animator != null)
             animator.SetTrigger(AtkHash);
-        Invoke(nameof(OnAttackHit), attackAnimDuration);
     }
 
     public void OnAttackHit()

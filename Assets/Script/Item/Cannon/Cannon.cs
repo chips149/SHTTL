@@ -3,6 +3,8 @@ using UnityEngine;
 public class Cannon : MonoBehaviour
 {
     private const string CannonBulletPath = "Prefab/Bullet/CannonBullet";
+    private static AudioClip _connonFireSfx;
+    private static AudioClip ConnonFireSfx => _connonFireSfx ??= Resources.Load<AudioClip>("Sound/SFX/ConnonFire");
 
     [SerializeField] private Cooldown _cooldown;
 
@@ -13,6 +15,7 @@ public class Cannon : MonoBehaviour
         MarbleBehavior marble = other.GetComponent<MarbleBehavior>();
         ShootCannon(marble.isClone);
 
+        AudioManager.PlaySFX(ConnonFireSfx);
         _cooldown.Begin();
 
         if (marble.hasCake)

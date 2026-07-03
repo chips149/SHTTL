@@ -1,12 +1,15 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BattlePanel : MonoBehaviour
 {
     public Image remainImage;
     public TMP_Text remainText;
+    public Button backButton;
+    public string mainMenuSceneName = "MainMenuScene";
 
     public float textDisplayDuration = 1f;
 
@@ -21,6 +24,9 @@ public class BattlePanel : MonoBehaviour
 
         _spawner.OnLevelStarted += OnLevelStarted;
         _spawner.OnWaveStarting += OnWaveStarting;
+
+        if (backButton != null)
+            backButton.onClick.AddListener(OnBackToMenu);
     }
 
     private void OnDestroy()
@@ -38,19 +44,43 @@ public class BattlePanel : MonoBehaviour
 
     private void OnWaveStarting(MonsterWaveConfig wave)
     {
-        _waveIndex++;
         int remaining = _totalWaves - _waveIndex;
-
+        _waveIndex++;
 
         remainText.text = $"{remaining}";
-        remainImage.gameObject.SetActive(true);
-
-        StartCoroutine(HideTextAfterDelay());
+        StartCoroutine(ShowAndHideAnimation());
     }
 
-    private IEnumerator HideTextAfterDelay()
+    private void OnBackToMenu()
     {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(mainMenuSceneName);
+    }
+
+    private IEnumerator ShowAndHideAnimation()
+    {
+        remainImage.transform.localScale = Vector3.zero;
+        remainImage.gameObject.SetActive(true);
+
+        float duration = 0.2f;
+        for (float t = 0; t < duration; t += Time.deltaTime)
+        {
+            float s = Mathf.SmoothStep(0, 1, t / duration);
+            remainImage.transform.localScale = new Vector3(s, s, s);
+            yield return null;
+        }
+        remainImage.transform.localScale = Vector3.one;
+
         yield return new WaitForSeconds(textDisplayDuration);
+
+        for (float t = 0; t < duration; t += Time.deltaTime)
+        {
+            float s = Mathf.SmoothStep(1, 0, t / duration);
+            remainImage.transform.localScale = new Vector3(s, s, s);
+            yield return null;
+        }
+        remainImage.transform.localScale = Vector3.zero;
+
         remainImage.gameObject.SetActive(false);
     }
 }
